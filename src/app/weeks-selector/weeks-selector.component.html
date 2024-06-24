@@ -1,0 +1,35 @@
+<div class="example-container">
+  <h2>Auswahl Wochen</h2>
+
+  <div
+    cdkDropList
+    #todoList="cdkDropList"
+    [cdkDropListData]="todo"
+    [cdkDropListConnectedTo]="[doneList]"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)">
+    @for (item of todo; track item) {
+      <div class="example-box" cdkDrag>{{item}}
+        <app-add-week [mode]="'add'" [week]="item" (onAction)="add($event)"></app-add-week>
+      </div>
+    }
+  </div>
+</div>
+
+<div class="example-container">
+  <h2>Gewählte Wochen</h2>
+
+  <div
+    cdkDropList
+    #doneList="cdkDropList"
+    [cdkDropListData]="done"
+    [cdkDropListConnectedTo]="[todoList]"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)">
+    @for (item of done; track item) {
+      <div class="example-box" cdkDrag>{{item}}
+        <app-add-week [mode]="'remove'" [week]="item" (onAction)="remove($event)"></app-add-week>
+      </div>
+    }
+  </div>
+</div>
