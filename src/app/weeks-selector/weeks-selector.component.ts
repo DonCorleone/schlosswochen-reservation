@@ -49,4 +49,13 @@ export class WeeksSelectorComponent {
     // add item to array todo.
     this.todo.push($event);
   }
+
+  up($event: string) {
+    const index = this.done.indexOf($event);
+    if (index > 0) {
+      const tmp = this.done[index - 1];
+      this.done[index - 1] = $event;
+      this.done[index] = tmp;
+    }
+  }
 }

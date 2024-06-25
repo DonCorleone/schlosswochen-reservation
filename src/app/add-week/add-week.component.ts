@@ -12,10 +12,12 @@ import {MatIcon} from "@angular/material/icon";
       <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="mode"></mat-icon>
     </div>
   `,
-  styles: ``
+  styles: `:host{
+    cursor: pointer;
+  }`
 })
 export class AddWeekComponent {
-  @Input() mode!: 'add'|'remove';
+  @Input() mode!: 'add'|'remove'|'arrow_upward'|'down';
   @Input() week!: string;
   onAction = output<string>();
   action() {

@@ -26,7 +26,18 @@ import {WeeksSelectorComponent} from "./weeks-selector/weeks-selector.component"
     </mat-form-field>
     <app-weeks-selector></app-weeks-selector>
   `,
-  styles: [],
+  styles: [`
+    :host {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    app-weeks-selector {
+      width: 100%;
+    }
+  `],
 })
 export class AppComponent implements OnInit{
   title = new FormControl('My App');
