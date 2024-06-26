@@ -9,6 +9,8 @@ import {
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {WeeksSelectorComponent} from "./weeks-selector/weeks-selector.component";
+import {MatAnchor, MatButton} from "@angular/material/button";
+import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
 
 @Component({
   selector: 'app-root',
@@ -17,14 +19,21 @@ import {WeeksSelectorComponent} from "./weeks-selector/weeks-selector.component"
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInput,
-    WeeksSelectorComponent
+    WeeksSelectorComponent,
+    MatButton,
+    MatAnchor,
+    KidsSelectorComponent
   ],
   template: `
-    <mat-form-field>
-      <mat-label>Input</mat-label>
-      <input matInput type="text" id="name" [formControl]=title>
-    </mat-form-field>
+    <app-kids-selector>
+
+    </app-kids-selector>
     <app-weeks-selector></app-weeks-selector>
+    <section>
+      <div class="example-button-row">
+        <button mat-stroked-button>Basic</button>
+      </div>
+    </section>
   `,
   styles: [`
     :host {
@@ -39,23 +48,8 @@ import {WeeksSelectorComponent} from "./weeks-selector/weeks-selector.component"
     }
   `],
 })
-export class AppComponent implements OnInit{
-  title = new FormControl('My App');
+export class AppComponent {
+  title = 'angular-material';
 
-  ngOnInit() {
-    this.title.events.subscribe((event) => {
-      if (event instanceof TouchedChangeEvent) {
-        console.log('Touched: ' + event.touched);
-      }
-      if (event instanceof PristineChangeEvent) {
-        console.log('Pristine: ' + event.pristine);
-      }
-      if (event instanceof ValueChangeEvent) {
-        console.log('ValueChange: ' + event.value);
-      }
-      if (event instanceof StatusChangeEvent) {
-        console.log('StatusChange: ' + event.status);
-      }
-    });
-  }
+
 }
