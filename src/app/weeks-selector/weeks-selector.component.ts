@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {MatIcon} from "@angular/material/icon";
 import {AddWeekComponent} from "../add-week/add-week.component";
@@ -15,6 +15,11 @@ export class WeeksSelectorComponent {
   todo = ['Woche 1', 'Woche 2', 'Woche 3'];
 
   done: string[] = [];
+  selectionChanged = output<string[]>();
+
+  action() {
+    this.selectionChanged.emit(this.done);
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -26,6 +31,7 @@ export class WeeksSelectorComponent {
         event.previousIndex,
         event.currentIndex,
       );
+      this.action();
     }
   }
 
@@ -38,6 +44,7 @@ export class WeeksSelectorComponent {
     }
     // add item to array done.
     this.done.push($event);
+    this.action();
   }
 
   remove($event: any) {
@@ -48,6 +55,7 @@ export class WeeksSelectorComponent {
     }
     // add item to array todo.
     this.todo.push($event);
+    this.action();
   }
 
   up($event: string) {
@@ -57,5 +65,6 @@ export class WeeksSelectorComponent {
       this.done[index - 1] = $event;
       this.done[index] = tmp;
     }
+    this.action();
   }
 }

@@ -4,7 +4,6 @@
   grid-template-rows: 80px 1fr;
   grid-template-areas: "margin-left header-left header-gutter header-right margin-right"
                        "margin-left left gutter right margin-right";
-  height: 90%;
 }
 
 .source-list {
@@ -36,18 +35,20 @@
 }
 
 .example-list {
-  border: solid 1px #ccc;
-  min-height: 60px;
-  height: 100%;
-  background: white;
+  outline: solid 1px #ccc;
   border-radius: 4px;
+  min-height: 60px;
+  height: 300px;
+  background: white;
   overflow: hidden;
   display: block;
 }
 
 .example-box {
   padding: 20px 10px;
-  border-bottom: solid 1px #ccc;
+  border: solid 1px #ccc;
+  border-radius: 4px;
+  margin: 5px;
   color: rgba(0, 0, 0, 0.87);
   display: flex;
   flex-direction: row;

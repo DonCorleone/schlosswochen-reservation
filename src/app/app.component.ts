@@ -24,23 +24,29 @@ import {WeeksSelectorComponent} from "./weeks-selector/weeks-selector.component"
       <mat-label>Input</mat-label>
       <input matInput type="text" id="name" [formControl]=title>
     </mat-form-field>
-    <app-weeks-selector></app-weeks-selector>
+    <app-weeks-selector (selectionChanged)="selectionChanged($event)"></app-weeks-selector>
+    <div class="output">Output: {{output}}</div>
   `,
   styles: [`
     :host {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       height: 100vh;
     }
     app-weeks-selector {
       width: 100%;
     }
+    .output {
+      margin-top: 20px;
+    }
   `],
 })
 export class AppComponent implements OnInit{
+
   title = new FormControl('My App');
+
+  output = '';
 
   ngOnInit() {
     this.title.events.subscribe((event) => {
@@ -57,5 +63,8 @@ export class AppComponent implements OnInit{
         console.log('StatusChange: ' + event.status);
       }
     });
+  }
+  selectionChanged($event: string[]) {
+    this.output = $event.join(', ');
   }
 }
