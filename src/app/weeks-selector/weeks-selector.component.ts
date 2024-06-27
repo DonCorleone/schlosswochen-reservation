@@ -13,8 +13,8 @@ import {AddWeekComponent} from "../add-week/add-week.component";
 })
 export class WeeksSelectorComponent {
   todo = ['Woche 1', 'Woche 2', 'Woche 3'];
-
   done: string[] = [];
+
   selectionChanged = output<string[]>();
 
   action() {

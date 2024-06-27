@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, output} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {MatIcon} from "@angular/material/icon";
 import {NgClass} from "@angular/common";
+import {Action} from "rxjs/internal/scheduler/Action";
 
 @Component({
   selector: 'app-kids-selector',
@@ -54,12 +55,19 @@ import {NgClass} from "@angular/common";
 })
 export class KidsSelectorComponent {
   amount: number = 1;
+  amountChanged = output<number>();
+
+  action() {
+    this.amountChanged.emit(this.amount);
+  }
 
   down() {
     this.amount--;
+    this.action();
   }
 
   up() {
     this.amount++;
+    this.action();
   }
 }
