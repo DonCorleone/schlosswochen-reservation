@@ -6,11 +6,11 @@
   <div
     cdkDropList
     #todoList="cdkDropList"
-    [cdkDropListData]="todo"
+    [cdkDropListData]="weeks"
     [cdkDropListConnectedTo]="[doneList]"
     class="example-list"
     (cdkDropListDropped)="drop($event)">
-    @for (item of todo; track item) {
+    @for (item of weeks; track item) {
       <div class="example-box" cdkDrag>{{item}}
         <app-add-week [mode]="'add'" [week]="item" (onAction)="add($event)"></app-add-week>
       </div>
@@ -27,13 +27,13 @@
   <div
     cdkDropList
     #doneList="cdkDropList"
-    [cdkDropListData]="done"
+    [cdkDropListData]="weeksSelected"
     [cdkDropListConnectedTo]="[todoList]"
     class="example-list"
     (cdkDropListDropped)="drop($event)">
-    @for (item of done; track item) {
+    @for (item of weeksSelected; track item) {
       <div class="example-box" cdkDrag>{{item}}
-        @if (done.indexOf(item) > 0) {
+        @if (weeksSelected.indexOf(item) > 0) {
           <app-add-week [mode]="'arrow_upward'" [week]="item" (onAction)="up($event)"></app-add-week>
         }
         <app-add-week [mode]="'remove'" [week]="item" (onAction)="remove($event)"></app-add-week>

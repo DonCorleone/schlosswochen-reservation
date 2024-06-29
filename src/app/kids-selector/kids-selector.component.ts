@@ -27,7 +27,6 @@ import {Action} from "rxjs/internal/scheduler/Action";
   styles: `
     :host{
       min-height: 20px;
-      width: 100%;
     }
     .tile-button {
 

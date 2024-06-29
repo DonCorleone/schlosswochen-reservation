@@ -44,6 +44,10 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
       height: 100vh;
     }
 
+    app-kids-selector {
+      width: 90%;
+    }
+
     app-weeks-selector {
       width: 100%;
     }

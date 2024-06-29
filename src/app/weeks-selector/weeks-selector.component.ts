@@ -12,13 +12,13 @@ import {AddWeekComponent} from "../add-week/add-week.component";
   styleUrls: ['./weeks-selector.component.scss']
 })
 export class WeeksSelectorComponent {
-  todo = ['Woche 1', 'Woche 2', 'Woche 3'];
-  done: string[] = [];
+  weeks = ['Woche 1', 'Woche 2', 'Woche 3'];
+  weeksSelected: string[] = [];
 
   selectionChanged = output<string[]>();
 
   action() {
-    this.selectionChanged.emit(this.done);
+    this.selectionChanged.emit(this.weeksSelected);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -38,32 +38,32 @@ export class WeeksSelectorComponent {
   add($event: any) {
 
     // remove item from array todo.
-    const index = this.todo.indexOf($event);
+    const index = this.weeks.indexOf($event);
     if (index > -1) {
-      this.todo.splice(index, 1);
+      this.weeks.splice(index, 1);
     }
     // add item to array done.
-    this.done.push($event);
+    this.weeksSelected.push($event);
     this.action();
   }
 
   remove($event: any) {
     // remove item from array done.
-    const index = this.done.indexOf($event);
+    const index = this.weeksSelected.indexOf($event);
     if (index > -1) {
-      this.done.splice(index, 1);
+      this.weeksSelected.splice(index, 1);
     }
     // add item to array todo.
-    this.todo.push($event);
+    this.weeks.push($event);
     this.action();
   }
 
   up($event: string) {
-    const index = this.done.indexOf($event);
+    const index = this.weeksSelected.indexOf($event);
     if (index > 0) {
-      const tmp = this.done[index - 1];
-      this.done[index - 1] = $event;
-      this.done[index] = tmp;
+      const tmp = this.weeksSelected[index - 1];
+      this.weeksSelected[index - 1] = $event;
+      this.weeksSelected[index] = tmp;
     }
     this.action();
   }
