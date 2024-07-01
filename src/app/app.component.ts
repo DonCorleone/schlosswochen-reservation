@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {
+  FormBuilder,
   FormControl,
   PristineChangeEvent,
   ReactiveFormsModule, StatusChangeEvent,
-  TouchedChangeEvent,
+  TouchedChangeEvent, Validators,
   ValueChangeEvent
 } from '@angular/forms';
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -25,7 +26,7 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
     KidsSelectorComponent
   ],
   template: `
-    <app-kids-selector (amountChanged)="amountChanged($event)"></app-kids-selector>
+    <!--app-kids-selector></app-kids-selector-->
     <app-weeks-selector (selectionChanged)="selectionChanged($event)"></app-weeks-selector>
     <div class="selectedWeeks">Selected Weeks: {{ selectedWeeks }}</div>
     <div class="selectedKids">Selected Kids: {{ selectedKids }}</div>
@@ -35,6 +36,9 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
       </div>
     </section>
     <div class="selectedGuids">Selected Guids: {{ selectedGuids }}</div>
+    <form [formGroup]="fg">
+      <app-kids-selector id="selector" formControlName="kidsSelector"></app-kids-selector>
+    </form>
   `,
   styles: [`
     :host {
@@ -44,8 +48,9 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
       height: 100vh;
     }
 
-    app-kids-selector {
+    form {
       width: 90%;
+      height: 90%;
     }
 
     app-weeks-selector {
@@ -66,6 +71,14 @@ export class AppComponent {
   selectedKids = 1;
   selectedGuids: string = '';
 
+  constructor(private fb: FormBuilder) {
+
+  }
+
+  fg = this.fb.group({
+    kidsSelector: [1, [Validators.required, Validators.max(3)]]
+  });
+
   selectionChanged($event: string[]) {
     this.selectedWeeks = $event.join(', ');
   }
@@ -82,14 +95,17 @@ export class AppComponent {
       guids.push(this.generateGuid());
     }
     this.selectedGuids = guids.join(', ');
+    const value = this.fg.get('kidsSelector')?.value;
+    console.log(value);
+    console.log(this.fg.get('kidsSelector')?.value);
   }
 
   private generateGuid(): string {
 
-    // generate a GUID
-    // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-      return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
-        (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
-      );
-    }
+  // generate a GUID
+  // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+      (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+    );
+  }
 }
