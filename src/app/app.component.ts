@@ -27,7 +27,7 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
       <input type="hidden" name="form-name" value="chooser" />
       <app-kids-selector id="selector" name="kids" formControlName="kidsSelector"></app-kids-selector>
       <app-weeks-selector name="weeks" formControlName="numbers"></app-weeks-selector>
-      <button type="submit" mat-stroked-button (click)="buttonClick()">Basic</button>
+      <button type="submit" mat-stroked-button>Submit</button>
     </form>
   `,
   styles: [`
