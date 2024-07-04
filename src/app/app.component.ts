@@ -32,7 +32,7 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
       <button type="submit" mat-stroked-button>Submit</button>
     </form-->
     <form name="subscribe" method="post" action="/schlosswochen/success" netlify
-          [formGroup]="fg">>
+          [formGroup]="fg"  (ngSubmit)="onSubmit()">
       <input type="hidden" name="form-name" value="subscribe" />
       <div class="grid grid-cols-1 gap-6">
         <label for="first_name" class="block">
@@ -115,6 +115,10 @@ export class AppComponent {
   }
 
   buttonClick() {
+    console.log(JSON.stringify(this.fg.value));
+  }
+
+  onSubmit() {
     console.log(JSON.stringify(this.fg.value));
   }
 }
