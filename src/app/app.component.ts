@@ -20,7 +20,7 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
   ],
   template: `
     <form
-      name="subscribe"
+      name="chooser"
       method="post"
       netlify
       [formGroup]="fg">
