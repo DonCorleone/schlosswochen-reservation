@@ -1,9 +1,9 @@
 <mat-grid-list cols="5" rowHeight="2:1">
-  <mat-grid-tile colspan="2" class="tile-button" [ngClass]="{'active': amount > 1}" (click)="onRemove()">
+  <mat-grid-tile (click)="onRemove()" [ngClass]="{'active': amount > 1}" class="tile-button" colspan="2">
     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="remove"></mat-icon>
   </mat-grid-tile>
   <mat-grid-tile>{{ amount }}</mat-grid-tile>
-  <mat-grid-tile colspan="2" class="tile-button" [ngClass]="{'active': amount < 3}" (click)="onAdd()">
+  <mat-grid-tile (click)="onAdd()" [ngClass]="{'active': amount < 3}" class="tile-button" colspan="2">
     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add"></mat-icon>
   </mat-grid-tile>
 </mat-grid-list>

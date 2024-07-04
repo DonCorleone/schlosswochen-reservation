@@ -1,4 +1,4 @@
-import {Component, output} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {MatIcon} from "@angular/material/icon";
 import {NgClass} from "@angular/common";
@@ -36,6 +36,20 @@ import {
   styleUrls: ['./kids-selector.component.scss']
 })
 export class KidsSelectorComponent implements ControlValueAccessor, Validator {
+  amount: number = 1;
+  amountString: string = '';
+  touched = false;
+  disabled = false;
+
+  static generateGuid(): string {
+
+    // generate a GUID
+    // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+      (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+    );
+  }
+
   validate(control: AbstractControl<any, any>): ValidationErrors | null {
     // split the string into an array of strings, by splitting at the comma
     const amountArray = control.value?.split(',');
@@ -50,8 +64,6 @@ export class KidsSelectorComponent implements ControlValueAccessor, Validator {
     return null;
   }
 
-  amount: number = 1;
-  amountString: string = '';
   writeValue(amountStr: string): void {
     this.amountString = amountStr;
     // split the string into an array of strings, by splitting at the comma
@@ -62,16 +74,18 @@ export class KidsSelectorComponent implements ControlValueAccessor, Validator {
   onChange = (amountStr: string) => {
     console.log(amountStr);
   };
-  onTouched = () => {};
-  touched = false;
-  disabled = false;
+
+  onTouched = () => {
+  };
 
   registerOnChange(onChange: any): void {
     this.onChange = onChange;
   }
+
   registerOnTouched(onTouched: any): void {
     this.onTouched = onTouched;
   }
+
   setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }
@@ -106,13 +120,5 @@ export class KidsSelectorComponent implements ControlValueAccessor, Validator {
       this.onTouched();
       this.touched = true;
     }
-  }
-  static generateGuid(): string {
-
-    // generate a GUID
-    // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
-      (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
-    );
   }
 }

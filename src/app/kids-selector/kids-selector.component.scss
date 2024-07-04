@@ -1,19 +1,23 @@
-:host{
+:host {
   min-height: 20px;
 }
+
 .tile-button {
   color: black;
   pointer-events: none;
+
   &.active {
     background-color: lightcoral;
     color: white;
     pointer-events: all;
     cursor: pointer;
+
     &:hover {
       background-color: lightblue;
       color: white;
     }
   }
+
   border: solid 1px #ccc;
   border-radius: 4px;
   display: flex;
