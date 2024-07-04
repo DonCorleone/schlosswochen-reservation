@@ -23,6 +23,7 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
       name="chooser"
       method="post"
       netlify
+      action="/schlosswochen/success"
       [formGroup]="fg">
       <input type="hidden" name="form-name" value="chooser" />
       <!--app-kids-selector id="selector" name="kids" formControlName="kidsSelector"></app-kids-selector-->
