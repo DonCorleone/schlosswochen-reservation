@@ -31,7 +31,8 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
 
       <button type="submit" mat-stroked-button>Submit</button>
     </form-->
-    <form name="subscribe" method="post" action="/schlosswochen/success" netlify>
+    <form name="subscribe" method="post" action="/schlosswochen/success" netlify
+          [formGroup]="fg">>
       <input type="hidden" name="form-name" value="subscribe" />
       <div class="grid grid-cols-1 gap-6">
         <label for="first_name" class="block">
