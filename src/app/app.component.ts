@@ -69,14 +69,14 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
 export class AppComponent {
   selectedWeeks = '';
   selectedKids = 1;
-  selectedGuids: string = '';
+  selectedGuids?: string | undefined | null = '';
 
   constructor(private fb: FormBuilder) {
 
   }
 
   fg = this.fb.group({
-    kidsSelector: [1, [Validators.required, Validators.max(3)]]
+    kidsSelector: ['', Validators.required]
   });
 
   selectionChanged($event: string[]) {
@@ -90,14 +90,7 @@ export class AppComponent {
   buttonClick() {
 
     // build a GUID for each selected kid
-    const guids = [];
-    for (let i = 0; i < this.selectedKids; i++) {
-      guids.push(this.generateGuid());
-    }
-    this.selectedGuids = guids.join(', ');
-    const value = this.fg.get('kidsSelector')?.value;
-    console.log(value);
-    console.log(this.fg.get('kidsSelector')?.value);
+    this.selectedGuids = this.fg.get('kidsSelector')?.value;
   }
 
   private generateGuid(): string {

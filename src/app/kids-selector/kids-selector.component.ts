@@ -37,7 +37,9 @@ import {
 })
 export class KidsSelectorComponent implements ControlValueAccessor, Validator {
   validate(control: AbstractControl<any, any>): ValidationErrors | null {
-    const quantity = control.value;
+    // split the string into an array of strings, by splitting at the comma
+    const amountArray = control.value?.split(',');
+    const quantity = amountArray?.length;
     if (quantity <= 0) {
       return {
         mustBePositive: {
@@ -49,12 +51,16 @@ export class KidsSelectorComponent implements ControlValueAccessor, Validator {
   }
 
   amount: number = 1;
-  writeValue(amount: number): void {
-    this.amount = amount;
+  amountString: string = '';
+  writeValue(amountStr: string): void {
+    this.amountString = amountStr;
+    // split the string into an array of strings, by splitting at the comma
+    const amountArray = amountStr.split(',');
+    this.amount = amountArray.length;
   }
 
-  onChange = (amount: number) => {
-    console.log(amount);
+  onChange = (amountStr: string) => {
+    console.log(amountStr);
   };
   onTouched = () => {};
   touched = false;
@@ -74,14 +80,26 @@ export class KidsSelectorComponent implements ControlValueAccessor, Validator {
     this.markAsTouched();
     if (!this.disabled) {
       this.amount--;
-      this.onChange(this.amount)
+      // for each kid, generate a GUID
+      const guids = [];
+      for (let i = 0; i < this.amount; i++) {
+        guids.push(this.generateGuid());
+      }
+      this.amountString = guids.join(', ');
+      this.onChange(this.amountString);
     }
   }
   onAdd() {
     this.markAsTouched();
     if (!this.disabled) {
       this.amount++;
-      this.onChange(this.amount)
+      // for each kid, generate a GUID
+      const guids = [];
+      for (let i = 0; i < this.amount; i++) {
+        guids.push(this.generateGuid());
+      }
+      this.amountString = guids.join(', ');
+      this.onChange(this.amountString);
     }
   }
   markAsTouched() {
@@ -89,5 +107,13 @@ export class KidsSelectorComponent implements ControlValueAccessor, Validator {
       this.onTouched();
       this.touched = true;
     }
+  }
+  private generateGuid(): string {
+
+    // generate a GUID
+    // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+      (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+    );
   }
 }
