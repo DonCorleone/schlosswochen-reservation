@@ -19,32 +19,61 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
     KidsSelectorComponent
   ],
   template: `
-    <form
+    <!--form
       name="chooser"
       method="post"
       netlify
       action="/schlosswochen/success"
       [formGroup]="fg">
       <input type="hidden" name="form-name" value="chooser" />
-      <!--app-kids-selector id="selector" name="kids" formControlName="kidsSelector"></app-kids-selector-->
-      <!--app-weeks-selector name="weeks" formControlName="numbers"></app-weeks-selector-->
-
-      <input
-        type="text"
-        name="last_name"
-        id="last_name"
-        class="mt-1 block w-full"
-        required
-      />
-      <input
-        type="text"
-        name="first_name"
-        id="first_name"
-        class="mt-1 block w-full"
-        required
-      />
+      <app-kids-selector id="selector" name="kids" formControlName="kidsSelector"></app-kids-selector>
+      <app-weeks-selector name="weeks" formControlName="numbers"></app-weeks-selector>
 
       <button type="submit" mat-stroked-button>Submit</button>
+    </form-->
+    <form name="subscribe" method="post" action="/schlosswochen/success" netlify>
+      <input type="hidden" name="form-name" value="subscribe" />
+      <div class="grid grid-cols-1 gap-6">
+        <label for="first_name" class="block">
+          <span class="text-bleu-ceruleen-pale text-base">Vorname</span>
+          <input
+            type="text"
+            name="first_name"
+            id="first_name"
+            class="mt-1 block w-full"
+            required
+          />
+        </label>
+        <label for="last_name" class="block">
+          <span class="text-bleu-ceruleen-pale text-base">Nachname</span>
+          <input
+            type="text"
+            name="last_name"
+            id="last_name"
+            class="mt-1 block w-full"
+            required
+          />
+        </label>
+        <label for="email" class="block">
+          <span class="text-bleu-ceruleen-pale text-base">e-Mail</span>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="mt-1 block w-full"
+            placeholder="john@example.com"
+            required
+          />
+        </label>
+        <button
+          mat-flat-button
+          color="primary"
+          class="bg-rouge-rubia text-bleu-ceruleen-pale"
+          type="submit"
+        >
+          Senden
+        </button>
+      </div>
     </form>
   `,
   styles: [`

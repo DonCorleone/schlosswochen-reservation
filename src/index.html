@@ -10,13 +10,12 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-<form name="chooser" netlify netlify-honeypot="bot-field" hidden
+<!-- A little help for the Netlify bots if you're not using a SSG -->
+<form name="subscribe" netlify netlify-honeypot="bot-field" hidden
       action="/schlosswochen/success">
-  <!--app-kids-selector-- name="kids"></app-kids-selector-->
-  <!--app-weeks-selector-- name="weeks"></app-weeks-selector-->
-
   <input type="text" name="first_name" />
   <input type="text" name="last_name" />
+  <input type="email" name="email" />
 </form>
 <app-root></app-root>
 </body>
