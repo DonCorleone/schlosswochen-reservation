@@ -59,6 +59,9 @@ export class WeeksSelectorComponent implements ControlValueAccessor {
     }
     // add item to array todo.
     this.weeks.push($event);
+
+    this.onChange(this.weeksSelected);
+    this.onTouched();
   }
 
   up($event: number) {
@@ -67,6 +70,9 @@ export class WeeksSelectorComponent implements ControlValueAccessor {
       const tmp = this.weeksSelected[index - 1];
       this.weeksSelected[index - 1] = $event;
       this.weeksSelected[index] = tmp;
+
+      this.onChange(this.weeksSelected);
+      this.onTouched();
     }
   }
 
