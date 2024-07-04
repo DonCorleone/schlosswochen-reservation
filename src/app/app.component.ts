@@ -25,8 +25,24 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
       netlify
       [formGroup]="fg">
       <input type="hidden" name="form-name" value="chooser" />
-      <app-kids-selector id="selector" name="kids" formControlName="kidsSelector"></app-kids-selector>
-      <app-weeks-selector name="weeks" formControlName="numbers"></app-weeks-selector>
+      <!--app-kids-selector id="selector" name="kids" formControlName="kidsSelector"></app-kids-selector-->
+      <!--app-weeks-selector name="weeks" formControlName="numbers"></app-weeks-selector-->
+
+      <input
+        type="text"
+        name="last_name"
+        id="last_name"
+        class="mt-1 block w-full"
+        required
+      />
+      <input
+        type="text"
+        name="first_name"
+        id="first_name"
+        class="mt-1 block w-full"
+        required
+      />
+
       <button type="submit" mat-stroked-button>Submit</button>
     </form>
   `,
