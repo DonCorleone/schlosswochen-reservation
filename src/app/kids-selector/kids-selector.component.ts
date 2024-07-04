@@ -76,39 +76,38 @@ export class KidsSelectorComponent implements ControlValueAccessor, Validator {
     this.disabled = disabled;
   }
 
-  onRemove() {
-    this.markAsTouched();
-    if (!this.disabled) {
-      this.amount--;
-      // for each kid, generate a GUID
-      const guids = [];
-      for (let i = 0; i < this.amount; i++) {
-        guids.push(this.generateGuid());
-      }
-      this.amountString = guids.join(', ');
-      this.onChange(this.amountString);
-    }
-  }
   onAdd() {
     this.markAsTouched();
     if (!this.disabled) {
+      // Generate a single new GUID
+      const newGuid = KidsSelectorComponent.generateGuid();
+      // Append the new GUID to the existing string, with handling for empty strings
+      this.amountString = this.amountString ? `${this.amountString},${newGuid}` : newGuid;
       this.amount++;
-      // for each kid, generate a GUID
-      const guids = [];
-      for (let i = 0; i < this.amount; i++) {
-        guids.push(this.generateGuid());
-      }
-      this.amountString = guids.join(', ');
       this.onChange(this.amountString);
     }
   }
+
+  onRemove() {
+    this.markAsTouched();
+    if (!this.disabled && this.amount > 0) {
+      // Convert the string to an array, remove the last element, and decrement the amount
+      const guids = this.amountString.split(',');
+      guids.pop();
+      this.amount--;
+      // Join the array back into a string
+      this.amountString = guids.join(',');
+      this.onChange(this.amountString);
+    }
+  }
+
   markAsTouched() {
     if (!this.touched) {
       this.onTouched();
       this.touched = true;
     }
   }
-  private generateGuid(): string {
+  static generateGuid(): string {
 
     // generate a GUID
     // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript

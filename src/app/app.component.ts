@@ -76,7 +76,7 @@ export class AppComponent {
   }
 
   fg = this.fb.group({
-    kidsSelector: ['', Validators.required]
+    kidsSelector: [KidsSelectorComponent.generateGuid(), Validators.required]
   });
 
   selectionChanged($event: string[]) {
