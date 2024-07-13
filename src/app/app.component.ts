@@ -22,8 +22,8 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
     <form name="subscribe" method="post" action="/schlosswochen/success" netlify
           [formGroup]="fg">
       <input type="hidden" name="form-name" value="subscribe" />
-        <app-kids-selector name="kids" formControlName="kidsSelector"></app-kids-selector>
-        <app-weeks-selector name="weeks" formControlName="numbers"></app-weeks-selector>
+        <app-kids-selector name="kidsSelector" formControlName="kidsSelector"></app-kids-selector>
+        <app-weeks-selector name="numbers" formControlName="numbers"></app-weeks-selector>
         <button
           mat-flat-button
           color="primary"
