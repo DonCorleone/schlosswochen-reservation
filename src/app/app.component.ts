@@ -72,20 +72,17 @@ export class AppComponent {
   }
 
   buttonClick() {
-    const form = document.querySelector('form');
-    if (!form) {
-      return;
-    }
-    const formData = new FormData(form);
+    const formValues = this.fg.value;
+    const data = {
+      'form-name': 'subscribe',  // Replace with your form name
+      ...formValues
+    };
+
     fetch('/', {
       method: 'POST',
-      body: formData,
+      body: new URLSearchParams(data as any) ,
     })
       .then(() => alert('Form submitted'))
       .catch(error => alert(error));
-  }
-
-  onSubmit() {
-    console.log(JSON.stringify(this.fg.value));
   }
 }
