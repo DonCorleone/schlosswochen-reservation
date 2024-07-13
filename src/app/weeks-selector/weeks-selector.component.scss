@@ -1,9 +1,9 @@
 :host {
   display: grid;
-  grid-template-columns: 20px 1fr 30px 1fr 20px;
+  grid-template-columns: 1fr 30px 1fr;
   grid-template-rows: 80px 1fr;
-  grid-template-areas: "margin-left header-left header-gutter header-right margin-right"
-                       "margin-left left gutter right margin-right";
+  grid-template-areas: "header-left header-gutter header-right"
+                       "left gutter right";
 }
 
 .source-list {
