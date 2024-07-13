@@ -66,7 +66,7 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
             required
           />
         </label>
-        <!--app-kids-selector id="selector" name="kids" formControlName="kidsSelector"></app-kids-selector-->
+        <app-kids-selector id="selector" name="kids" formControlName="kidsSelector"></app-kids-selector>
         <!--app-weeks-selector name="weeks" formControlName="numbers"></app-weeks-selector-->
         <button
           mat-flat-button
