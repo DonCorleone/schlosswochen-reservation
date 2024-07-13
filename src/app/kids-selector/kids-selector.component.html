@@ -1,9 +1,17 @@
-<mat-grid-list cols="5" rowHeight="2:1">
-  <mat-grid-tile (click)="onRemove()" [ngClass]="{'active': amount > 1}" class="tile-button" colspan="2">
+<mat-grid-list cols="9" rowHeight="50">
+  <mat-grid-tile colspan="4">
+    <b>Mehr Kinder</b>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1">
+  </mat-grid-tile>
+  <mat-grid-tile colspan="4">
+    <b>Weniger Kinder</b>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="4" (click)="onRemove()" [ngClass]="{'active': amount > 1}" class="tile-button">
     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="remove"></mat-icon>
   </mat-grid-tile>
   <mat-grid-tile>{{ amount }}</mat-grid-tile>
-  <mat-grid-tile (click)="onAdd()" [ngClass]="{'active': amount < 3}" class="tile-button" colspan="2">
+  <mat-grid-tile  colspan="4" (click)="onAdd()" [ngClass]="{'active': amount < 3}" class="tile-button">
     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add"></mat-icon>
   </mat-grid-tile>
 </mat-grid-list>

@@ -3,12 +3,13 @@ import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} f
 import {MatIcon} from "@angular/material/icon";
 import {AddWeekComponent} from "../add-week/add-week.component";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 
 @Component({
   selector: 'app-weeks-selector',
   standalone: true,
   imports: [
-    CdkDropList, CdkDrag, MatIcon, AddWeekComponent],
+    CdkDropList, CdkDrag, MatIcon, AddWeekComponent, MatGridList, MatGridTile],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

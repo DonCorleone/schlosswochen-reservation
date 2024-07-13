@@ -5,6 +5,7 @@ import {MatInput} from "@angular/material/input";
 import {WeeksSelectorComponent} from "./weeks-selector/weeks-selector.component";
 import {MatAnchor, MatButton} from "@angular/material/button";
 import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
+import {SubmitterComponent} from "./submitter/submitter.component";
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
     MatButton,
     MatAnchor,
     KidsSelectorComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SubmitterComponent
   ],
   template: `
     <form name="reservation" method="post" action="/schlosswochen/success" netlify
@@ -24,15 +26,7 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
       <input type="hidden" name="form-name" value="reservation" />
         <app-kids-selector name="kidsSelector" formControlName="kidsSelector"></app-kids-selector>
         <app-weeks-selector name="numbers" formControlName="numbers"></app-weeks-selector>
-        <button
-          mat-flat-button
-          color="primary"
-          class="bg-rouge-rubia text-bleu-ceruleen-pale"
-          type="submit"
-          (click)="buttonClick()"
-        >
-          Senden
-        </button>
+        <app-submitter (onSubmit)="buttonClick()"></app-submitter>
     </form>
   `,
   styles: [`
@@ -48,17 +42,7 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
       height: 90%;
     }
 
-    app-weeks-selector {
-      width: 100%;
-    }
 
-    .selectedWeeks {
-      margin: 20px;
-    }
-
-    .selectedKids {
-      margin: 20px;
-    }
   `],
 })
 export class AppComponent {
