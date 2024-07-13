@@ -1,7 +1,7 @@
 <div class="source-header">
   <h3>Auswahl Wochen</h3>
 </div>
-<div class="example-container source-list">
+<div class="container source-list">
 
   <div
     #todoList="cdkDropList"
@@ -9,9 +9,9 @@
     [cdkDropListConnectedTo]="[doneList]"
     [cdkDropListData]="weeks"
     cdkDropList
-    class="example-list">
+    class="list">
     @for (item of weeks; track item) {
-      <div class="example-box" cdkDrag>{{ item }}
+      <div class="box" cdkDrag>{{ item }}
         <app-add-week [mode]="'add'" [week]="item" (onAction)="add($event)"></app-add-week>
       </div>
     }
@@ -22,7 +22,7 @@
   <h3>Gewählte Wochen</h3>
 </div>
 
-<div class="example-container target-list">
+<div class="container target-list">
 
   <div
     #doneList="cdkDropList"
@@ -30,9 +30,9 @@
     [cdkDropListConnectedTo]="[todoList]"
     [cdkDropListData]="weeksSelected"
     cdkDropList
-    class="example-list">
+    class="list">
     @for (item of weeksSelected; track item) {
-      <div class="example-box" cdkDrag>{{ item }}
+      <div class="box" cdkDrag>{{ item }}
         @if (weeksSelected.indexOf(item) > 0) {
           <app-add-week [mode]="'arrow_upward'" [week]="item" (onAction)="up($event)"></app-add-week>
         }

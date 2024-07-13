@@ -19,9 +19,9 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
     ReactiveFormsModule
   ],
   template: `
-    <form name="subscribe" method="post" action="/schlosswochen/success" netlify
+    <form name="reservation" method="post" action="/schlosswochen/success" netlify
           [formGroup]="fg">
-      <input type="hidden" name="form-name" value="subscribe" />
+      <input type="hidden" name="form-name" value="reservation" />
         <app-kids-selector name="kidsSelector" formControlName="kidsSelector"></app-kids-selector>
         <app-weeks-selector name="numbers" formControlName="numbers"></app-weeks-selector>
         <button
@@ -74,7 +74,7 @@ export class AppComponent {
   buttonClick() {
     const formValues = this.fg.value;
     const data = {
-      'form-name': 'subscribe',  // Replace with your form name
+      'form-name': 'reservation',  // Replace with your form name
       ...formValues
     };
 
