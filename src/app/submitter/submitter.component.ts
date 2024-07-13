@@ -16,11 +16,18 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
     MatGridTile
   ],
   template: `
-    <mat-grid-list cols="1" rowHeight="50">
-      <mat-grid-tile>
+    <mat-grid-list cols="9" rowHeight="50">
 
+      <mat-grid-tile colspan="2">
       </mat-grid-tile>
-      <mat-grid-tile>
+      <mat-grid-tile  colspan="5">
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2">
+      </mat-grid-tile>
+      <mat-grid-tile  colspan="5">
         <button
           mat-flat-button
           color="primary"
@@ -30,6 +37,8 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
         >
           Senden
         </button>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
       </mat-grid-tile>
     </mat-grid-list>
   `,
@@ -41,6 +50,10 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
     }
     mat-grid-list {
       width: 100%;
+    }
+    button {
+      width: 100%;
+      max-width: 300px;
     }
   `
 })
