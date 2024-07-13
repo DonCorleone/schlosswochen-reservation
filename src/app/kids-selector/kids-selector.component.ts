@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, forwardRef, inject} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {MatIcon} from "@angular/material/icon";
 import {NgClass} from "@angular/common";
@@ -24,7 +24,7 @@ import {
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: KidsSelectorComponent
+      useExisting: forwardRef(() => KidsSelectorComponent),
     },
     {
       provide: NG_VALIDATORS,
@@ -36,6 +36,7 @@ import {
   styleUrls: ['./kids-selector.component.scss']
 })
 export class KidsSelectorComponent implements ControlValueAccessor, Validator {
+
   amount: number = 1;
   amountString: string = '';
   touched = false;
