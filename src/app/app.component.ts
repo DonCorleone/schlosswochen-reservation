@@ -8,19 +8,18 @@ import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
 import {SubmitterComponent} from "./submitter/submitter.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInput,
-    WeeksSelectorComponent,
-    MatButton,
-    MatAnchor,
-    KidsSelectorComponent,
-    ReactiveFormsModule,
-    SubmitterComponent
-  ],
-  template: `
+    selector: 'app-root',
+    imports: [
+        MatFormFieldModule,
+        MatInput,
+        WeeksSelectorComponent,
+        MatButton,
+        MatAnchor,
+        KidsSelectorComponent,
+        ReactiveFormsModule,
+        SubmitterComponent
+    ],
+    template: `
     <form name="reservation" method="post" action="/schlosswochen/success" netlify
           [formGroup]="fg">
       <input type="hidden" name="form-name" value="reservation" />
@@ -29,7 +28,7 @@ import {SubmitterComponent} from "./submitter/submitter.component";
         <app-submitter (onSubmit)="buttonClick()"></app-submitter>
     </form>
   `,
-  styles: [`
+    styles: [`
     :host {
       display: flex;
       flex-direction: column;
@@ -43,7 +42,7 @@ import {SubmitterComponent} from "./submitter/submitter.component";
     }
 
 
-  `],
+  `]
 })
 export class AppComponent {
 

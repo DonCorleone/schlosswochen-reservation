@@ -5,17 +5,16 @@ import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 
 @Component({
-  selector: 'app-submitter',
-  standalone: true,
-  imports: [
-    MatButton,
-    AddWeekComponent,
-    CdkDrag,
-    CdkDropList,
-    MatGridList,
-    MatGridTile
-  ],
-  template: `
+    selector: 'app-submitter',
+    imports: [
+        MatButton,
+        AddWeekComponent,
+        CdkDrag,
+        CdkDropList,
+        MatGridList,
+        MatGridTile
+    ],
+    template: `
     <mat-grid-list cols="9" rowHeight="50">
 
       <mat-grid-tile colspan="2">
@@ -42,7 +41,7 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
       </mat-grid-tile>
     </mat-grid-list>
   `,
-  styles: `
+    styles: `
     :host {
       min-height: 20px;
       display: flex;

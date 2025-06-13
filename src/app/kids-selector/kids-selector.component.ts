@@ -12,28 +12,27 @@ import {
 } from "@angular/forms";
 
 @Component({
-  selector: 'app-kids-selector',
-  standalone: true,
-  imports: [
-    MatGridList,
-    MatGridTile,
-    MatIcon,
-    NgClass
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: forwardRef(() => KidsSelectorComponent),
-    },
-    {
-      provide: NG_VALIDATORS,
-      multi: true,
-      useExisting: KidsSelectorComponent
-    }
-  ],
-  templateUrl: `./kids-selector.component.html`,
-  styleUrls: ['./kids-selector.component.scss']
+    selector: 'app-kids-selector',
+    imports: [
+        MatGridList,
+        MatGridTile,
+        MatIcon,
+        NgClass
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: forwardRef(() => KidsSelectorComponent),
+        },
+        {
+            provide: NG_VALIDATORS,
+            multi: true,
+            useExisting: KidsSelectorComponent
+        }
+    ],
+    templateUrl: `./kids-selector.component.html`,
+    styleUrls: ['./kids-selector.component.scss']
 })
 export class KidsSelectorComponent implements ControlValueAccessor, Validator {
 

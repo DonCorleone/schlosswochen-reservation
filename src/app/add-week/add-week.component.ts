@@ -2,17 +2,16 @@ import {Component, Input, output} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
 
 @Component({
-  selector: 'app-add-week',
-  standalone: true,
-  imports: [
-    MatIcon
-  ],
-  template: `
+    selector: 'app-add-week',
+    imports: [
+        MatIcon
+    ],
+    template: `
     <div (click)="action()">
       <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="mode"></mat-icon>
     </div>
   `,
-  styles: `:host {
+    styles: `:host {
     cursor: pointer;
   }`
 })
