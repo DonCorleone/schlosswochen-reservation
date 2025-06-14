@@ -1,9 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
 import {WeeksSelectorComponent} from "./weeks-selector/weeks-selector.component";
-import {MatAnchor, MatButton} from "@angular/material/button";
 import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
 import {SubmitterComponent} from "./submitter/submitter.component";
 
@@ -11,10 +9,7 @@ import {SubmitterComponent} from "./submitter/submitter.component";
     selector: 'app-root',
     imports: [
         MatFormFieldModule,
-        MatInput,
         WeeksSelectorComponent,
-        MatButton,
-        MatAnchor,
         KidsSelectorComponent,
         ReactiveFormsModule,
         SubmitterComponent

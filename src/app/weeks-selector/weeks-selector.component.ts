@@ -1,6 +1,5 @@
 import {Component, forwardRef} from '@angular/core';
 import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {MatIcon} from "@angular/material/icon";
 import {AddWeekComponent} from "../add-week/add-week.component";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
@@ -8,7 +7,7 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 @Component({
     selector: 'app-weeks-selector',
     imports: [
-        CdkDropList, CdkDrag, MatIcon, AddWeekComponent, MatGridList, MatGridTile
+        CdkDropList, CdkDrag, AddWeekComponent, MatGridList, MatGridTile
     ],
     providers: [
         {
