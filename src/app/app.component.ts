@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {WeeksSelectorComponent} from "./weeks-selector/weeks-selector.component";
@@ -40,14 +40,13 @@ import {SubmitterComponent} from "./submitter/submitter.component";
   `]
 })
 export class AppComponent {
+  private fb = inject(FormBuilder);
+
 
   fg = this.fb.group({
     kidsSelector: [KidsSelectorComponent.generateGuid(), Validators.required],
     numbers: [[]]
   });
-
-  constructor(private fb: FormBuilder) {
-  }
 
   buttonClick() {
     const formValues = this.fg.value;
