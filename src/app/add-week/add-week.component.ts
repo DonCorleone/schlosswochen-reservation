@@ -1,4 +1,4 @@
-import {Component, Input, output} from '@angular/core';
+import {Component, output, input} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
 
 @Component({
@@ -8,7 +8,7 @@ import {MatIcon} from "@angular/material/icon";
     ],
     template: `
     <div (click)="action()">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="mode"></mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="mode()"></mat-icon>
     </div>
   `,
     styles: `:host {
@@ -16,11 +16,11 @@ import {MatIcon} from "@angular/material/icon";
   }`
 })
 export class AddWeekComponent {
-  @Input() mode!: 'add' | 'remove' | 'arrow_upward' | 'down';
-  @Input() week!: number;
+  readonly mode = input.required<'add' | 'remove' | 'arrow_upward' | 'down'>();
+  readonly week = input.required<number>();
   onAction = output<number>();
 
   action() {
-    this.onAction.emit(this.week);
+    this.onAction.emit(this.week());
   }
 }
