@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatFormFieldModule} from "@angular/material/form-field";
 import {WeeksSelectorComponent} from "./weeks-selector/weeks-selector.component";
 import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
 import {SubmitterComponent} from "./submitter/submitter.component";
@@ -8,7 +7,6 @@ import {SubmitterComponent} from "./submitter/submitter.component";
 @Component({
     selector: 'app-root',
     imports: [
-        MatFormFieldModule,
         WeeksSelectorComponent,
         KidsSelectorComponent,
         ReactiveFormsModule,

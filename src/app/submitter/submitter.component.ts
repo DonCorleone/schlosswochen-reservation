@@ -1,35 +1,24 @@
 import {Component, output} from '@angular/core';
-import {MatButton} from "@angular/material/button";
-import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 
 @Component({
     selector: 'app-submitter',
-    imports: [
-        MatButton,
-        MatGridList,
-        MatGridTile
-    ],
     template: `
-    <mat-grid-list cols="9" rowHeight="50">
-
-      <mat-grid-tile colspan="2" />
-      <mat-grid-tile colspan="5" />
-      <mat-grid-tile colspan="2" />
-
-      <mat-grid-tile colspan="2" />
-      <mat-grid-tile  colspan="5">
+    <div class="grid-container">
+      <div class="grid-tile" colspan="2"></div>
+      <div class="grid-tile" colspan="5"></div>
+      <div class="grid-tile" colspan="2"></div>
+      <div class="grid-tile" colspan="2"></div>
+      <div class="grid-tile" colspan="5">
         <button
-          mat-flat-button
-          color="primary"
           class="bg-rouge-rubia text-bleu-ceruleen-pale"
           type="submit"
           (click)="buttonClick()"
         >
           Senden
         </button>
-      </mat-grid-tile>
-      <mat-grid-tile colspan="2" />
-    </mat-grid-list>
+      </div>
+      <div class="grid-tile" colspan="2"></div>
+    </div>
   `,
     styles: `
     :host {
@@ -37,12 +26,24 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
       display: flex;
       justify-content: center;
     }
-    mat-grid-list {
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      grid-auto-rows: 50px;
       width: 100%;
     }
+    .grid-tile {
+      grid-column: span 1;
+    }
+    .grid-tile[colspan="2"] { grid-column: span 2; }
+    .grid-tile[colspan="5"] { grid-column: span 5; }
     button {
       width: 100%;
       max-width: 300px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
   `
 })

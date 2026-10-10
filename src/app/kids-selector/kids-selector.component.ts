@@ -1,6 +1,4 @@
-import {Component, forwardRef, inject} from '@angular/core';
-import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {MatIcon} from "@angular/material/icon";
+import {Component, forwardRef} from '@angular/core';
 import {NgClass} from "@angular/common";
 import {
   AbstractControl,
@@ -13,12 +11,7 @@ import {
 
 @Component({
     selector: 'app-kids-selector',
-    imports: [
-        MatGridList,
-        MatGridTile,
-        MatIcon,
-        NgClass
-    ],
+    imports: [NgClass],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -31,8 +24,60 @@ import {
             useExisting: KidsSelectorComponent
         }
     ],
-    templateUrl: `./kids-selector.component.html`,
-    styleUrls: ['./kids-selector.component.scss']
+    template: `
+    <div class="grid-container">
+      <div class="grid-tile" colspan="4"><b>Weniger Kinder</b></div>
+      <div class="grid-tile" colspan="1"></div>
+      <div class="grid-tile" colspan="4"><b>Mehr Kinder</b></div>
+      <div class="grid-tile tile-button" colspan="4" (click)="onRemove()" [ngClass]="{'active': amount > 1}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+      </div>
+      <div class="grid-tile">{{ amount }}</div>
+      <div class="grid-tile tile-button" colspan="4" (click)="onAdd()" [ngClass]="{'active': amount < 3}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      </div>
+    </div>
+  `,
+    styles: `
+    :host {
+      min-height: 20px;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      grid-auto-rows: 50px;
+      width: 100%;
+    }
+    .grid-tile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: solid 1px #ccc;
+      border-radius: 4px;
+      grid-column: span 1;
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+    .grid-tile[colspan="4"] { grid-column: span 4; }
+    .grid-tile[colspan="1"] { grid-column: span 1; }
+    .tile-button {
+      color: black;
+      pointer-events: none;
+      cursor: default;
+      &.active {
+        background-color: lightcoral;
+        color: white;
+        pointer-events: all;
+        cursor: pointer;
+        &:hover {
+          background-color: lightblue;
+          color: white;
+        }
+      }
+    }
+  `
 })
 export class KidsSelectorComponent implements ControlValueAccessor, Validator {
 
