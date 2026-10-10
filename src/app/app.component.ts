@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {WeeksSelectorComponent} from "./weeks-selector/weeks-selector.component";
 import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
@@ -14,14 +14,13 @@ import {SubmitterComponent} from "./submitter/submitter.component";
     ],
     template: `
     <form name="reservation" method="post" action="/schlosswochen/success" netlify
-          [formGroup]="fg">
+          [formGroup]="fg" aria-label="Reservierungsformular">
       <input type="hidden" name="form-name" value="reservation" />
         <app-kids-selector name="kidsSelector" formControlName="kidsSelector"></app-kids-selector>
         <app-weeks-selector name="numbers" formControlName="numbers"></app-weeks-selector>
         <app-submitter (onSubmit)="buttonClick()"></app-submitter>
     </form>
   `,
-    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
     :host {
       display: flex;
@@ -34,13 +33,10 @@ import {SubmitterComponent} from "./submitter/submitter.component";
       width: 90%;
       height: 90%;
     }
-
-
   `]
 })
 export class AppComponent {
   private fb = inject(FormBuilder);
-
 
   fg = this.fb.group({
     kidsSelector: [KidsSelectorComponent.generateGuid(), Validators.required],
@@ -50,13 +46,13 @@ export class AppComponent {
   buttonClick() {
     const formValues = this.fg.value;
     const data = {
-      'form-name': 'reservation',  // Replace with your form name
+      'form-name': 'reservation',
       ...formValues
     };
 
     fetch('/', {
       method: 'POST',
-      body: new URLSearchParams(data as any) ,
+      body: new URLSearchParams(data as unknown as Record<string, string>),
     })
       .then(() => alert('Form submitted'))
       .catch(error => alert(error));

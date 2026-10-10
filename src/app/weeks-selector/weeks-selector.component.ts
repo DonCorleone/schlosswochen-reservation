@@ -1,4 +1,4 @@
-import {Component, forwardRef, ChangeDetectionStrategy} from '@angular/core';
+import {Component, forwardRef, signal, computed} from '@angular/core';
 import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {AddWeekComponent} from "../add-week/add-week.component";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -14,7 +14,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
         }
     ],
     template: `
-    <div class="grid-container">
+    <div class="grid-container" role="group" aria-label="Wochen Auswahl">
       <div class="grid-tile" colspan="4"><b>Auswahl Wochen</b></div>
       <div class="grid-tile" colspan="1"></div>
       <div class="grid-tile" colspan="4"><b>Reservation Wochen</b></div>
@@ -23,11 +23,13 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
           #todoList="cdkDropList"
           (cdkDropListDropped)="drop($event)"
           [cdkDropListConnectedTo]="[doneList]"
-          [cdkDropListData]="weeks"
+          [cdkDropListData]="weeks()"
           cdkDropList
-          class="list">
-          @for (item of weeks; track item) {
-            <div class="box" cdkDrag>{{ item }}
+          class="list"
+          aria-label="Verfügbare Wochen"
+          role="region">
+          @for (item of weeks(); track item) {
+            <div class="box" cdkDrag aria-label="Woche {{item}}" role="option">{{ item }}
               <app-add-week [mode]="'add'" [week]="item" (onAction)="add($event)"></app-add-week>
             </div>
           }
@@ -39,12 +41,14 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
           #doneList="cdkDropList"
           (cdkDropListDropped)="drop($event)"
           [cdkDropListConnectedTo]="[todoList]"
-          [cdkDropListData]="weeksSelected"
+          [cdkDropListData]="weeksSelected()"
           cdkDropList
-          class="list">
-          @for (item of weeksSelected; track item) {
-            <div class="box" cdkDrag>{{ item }}
-              @if (weeksSelected.indexOf(item) > 0) {
+          class="list"
+          aria-label="Ausgewählte Wochen"
+          role="region">
+          @for (item of weeksSelected(); track item) {
+            <div class="box" cdkDrag aria-label="Ausgewählte Woche {{item}}" role="option">{{ item }}
+              @if (canMoveUp(item)) {
                 <app-add-week [mode]="'arrow_upward'" [week]="item" (onAction)="up($event)"></app-add-week>
               }
               <app-add-week [mode]="'remove'" [week]="item" (onAction)="remove($event)"></app-add-week>
@@ -54,7 +58,6 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
       </div>
     </div>
   `,
-    changeDetection: ChangeDetectionStrategy.Eager,
     styles: `
     :host {
       display: block;
@@ -128,64 +131,67 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
   `
 })
 export class WeeksSelectorComponent implements ControlValueAccessor {
-  weeks = [1, 2, 3];
-  weeksSelected: number[] = [];
-  onChange: any = () => {
-  };
-  onTouched: any = () => {
-  };
+  weeks = signal([1, 2, 3]);
+  weeksSelected = signal<number[]>([]);
+  onChange: any = () => {};
+  onTouched: any = () => {};
+
+  canMoveUp = (item: number) => computed(() => this.weeksSelected().indexOf(item) > 0);
 
   drop(event: CdkDragDrop<number[]>) {
+    const containerData = event.container.data as number[];
+    const previousData = event.previousContainer.data as number[];
+    
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(containerData, event.previousIndex, event.currentIndex);
+      if (containerData === this.weeksSelected()) {
+        this.weeksSelected.set([...containerData]);
+      } else {
+        this.weeks.set([...containerData]);
+      }
     } else {
       transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
+        previousData,
+        containerData,
         event.previousIndex,
         event.currentIndex,
       );
+      this.weeks.set([...this.weeks()]);
+      this.weeksSelected.set([...this.weeksSelected()]);
     }
+    this.onChange(this.weeksSelected());
   }
 
-  add($event: any) {
-
-    // remove item from array todo.
-    const index = this.weeks.indexOf($event);
-    if (index > -1) {
-      this.weeks.splice(index, 1);
-    }
-    // add item to array done.
-    this.weeksSelected.push($event);
+  add($event: number) {
+    const weeks = this.weeks().filter(w => w !== $event);
+    this.weeks.set(weeks);
+    this.weeksSelected.update(selected => [...selected, $event]);
+    this.onChange(this.weeksSelected());
   }
 
-  remove($event: any) {
-    // remove item from array done.
-    const index = this.weeksSelected.indexOf($event);
-    if (index > -1) {
-      this.weeksSelected.splice(index, 1);
-    }
-    // add item to array todo.
-    this.weeks.push($event);
-
-    this.onChange(this.weeksSelected);
+  remove($event: number) {
+    const selected = this.weeksSelected().filter(w => w !== $event);
+    this.weeksSelected.set(selected);
+    this.weeks.update(weeks => [...weeks, $event]);
+    this.onChange(this.weeksSelected());
     this.onTouched();
   }
 
   up($event: number) {
-    const index = this.weeksSelected.indexOf($event);
+    const selected = this.weeksSelected();
+    const index = selected.indexOf($event);
     if (index > 0) {
-      const tmp = this.weeksSelected[index - 1];
-      this.weeksSelected[index - 1] = $event;
-      this.weeksSelected[index] = tmp;
-
-      this.onChange(this.weeksSelected);
+      const newSelected = [...selected];
+      newSelected[index - 1] = $event;
+      newSelected[index] = selected[index - 1];
+      this.weeksSelected.set(newSelected);
+      this.onChange(this.weeksSelected());
       this.onTouched();
     }
   }
 
   writeValue(value: number[]): void {
-    this.weeksSelected = value;
+    this.weeksSelected.set(value || []);
   }
 
   registerOnChange(fn: any): void {

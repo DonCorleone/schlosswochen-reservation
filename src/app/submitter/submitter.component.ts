@@ -1,4 +1,4 @@
-import {Component, output, ChangeDetectionStrategy} from '@angular/core';
+import {Component, output} from '@angular/core';
 
 @Component({
     selector: 'app-submitter',
@@ -13,6 +13,7 @@ import {Component, output, ChangeDetectionStrategy} from '@angular/core';
           class="bg-rouge-rubia text-bleu-ceruleen-pale"
           type="submit"
           (click)="buttonClick()"
+          aria-label="Formular abschicken"
         >
           Senden
         </button>
@@ -20,7 +21,6 @@ import {Component, output, ChangeDetectionStrategy} from '@angular/core';
       <div class="grid-tile" colspan="2"></div>
     </div>
   `,
-    changeDetection: ChangeDetectionStrategy.Eager,
     styles: `
     :host {
       min-height: 20px;

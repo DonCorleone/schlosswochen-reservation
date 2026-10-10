@@ -1,9 +1,9 @@
-import {Component, output, input, ChangeDetectionStrategy} from '@angular/core';
+import {Component, output, input} from '@angular/core';
 
 @Component({
     selector: 'app-add-week',
     template: `
-    <div (click)="action()">
+    <div (click)="action()" role="button" tabindex="0" aria-label="{{getAriaLabel()}}">
       @switch (mode()) {
         @case ('add') { <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> }
         @case ('remove') { <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg> }
@@ -12,7 +12,6 @@ import {Component, output, input, ChangeDetectionStrategy} from '@angular/core';
       }
     </div>
   `,
-    changeDetection: ChangeDetectionStrategy.Eager,
     styles: `:host {
     cursor: pointer;
     display: inline-block;
@@ -28,6 +27,14 @@ export class AddWeekComponent {
   readonly mode = input.required<'add' | 'remove' | 'arrow_upward' | 'down'>();
   readonly week = input.required<number>();
   onAction = output<number>();
+
+  getAriaLabel(): string {
+    const m = this.mode();
+    if (m === 'add') return 'Add week';
+    if (m === 'remove') return 'Remove week';
+    if (m === 'arrow_upward') return 'Move week up';
+    return 'Move week down';
+  }
 
   action() {
     this.onAction.emit(this.week());
