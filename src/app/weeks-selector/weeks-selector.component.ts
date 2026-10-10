@@ -1,4 +1,4 @@
-import {Component, forwardRef} from '@angular/core';
+import {Component, forwardRef, ChangeDetectionStrategy} from '@angular/core';
 import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {AddWeekComponent} from "../add-week/add-week.component";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -54,6 +54,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
       </div>
     </div>
   `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: `
     :host {
       display: block;

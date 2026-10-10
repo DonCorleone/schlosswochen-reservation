@@ -1,4 +1,4 @@
-import {Component, forwardRef} from '@angular/core';
+import {Component, forwardRef, ChangeDetectionStrategy} from '@angular/core';
 import {NgClass} from "@angular/common";
 import {
   AbstractControl,
@@ -38,6 +38,7 @@ import {
       </div>
     </div>
   `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: `
     :host {
       min-height: 20px;

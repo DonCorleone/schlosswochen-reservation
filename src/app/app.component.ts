@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {WeeksSelectorComponent} from "./weeks-selector/weeks-selector.component";
 import {KidsSelectorComponent} from "./kids-selector/kids-selector.component";
@@ -21,6 +21,7 @@ import {SubmitterComponent} from "./submitter/submitter.component";
         <app-submitter (onSubmit)="buttonClick()"></app-submitter>
     </form>
   `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
     :host {
       display: flex;

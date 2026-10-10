@@ -1,4 +1,4 @@
-import {Component, output, input} from '@angular/core';
+import {Component, output, input, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
     selector: 'app-add-week',
@@ -12,6 +12,7 @@ import {Component, output, input} from '@angular/core';
       }
     </div>
   `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: `:host {
     cursor: pointer;
     display: inline-block;

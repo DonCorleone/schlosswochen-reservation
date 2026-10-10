@@ -1,4 +1,4 @@
-import {Component, output} from '@angular/core';
+import {Component, output, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
     selector: 'app-submitter',
@@ -20,6 +20,7 @@ import {Component, output} from '@angular/core';
       <div class="grid-tile" colspan="2"></div>
     </div>
   `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: `
     :host {
       min-height: 20px;
