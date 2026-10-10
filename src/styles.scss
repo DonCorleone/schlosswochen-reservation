@@ -1,4 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+/* Design tokens — Figma "Dark · Desktop · Reservation planner" (15-893) */
+:root {
+  --bg: #0f1412;
+  --surface: #111a17;
+  --surface-sunken: #0f1412;
+  --border: #2a3632;
+  --border-subtle: #1f2b28;
+  --accent: #75dcc2;
+  --brand: #175c50;
+  --badge: #17332d;
+  --text: #f5f4f0;
+  --muted: #8f9a96;
+  --white: #ffffff;
+  --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
 
 html, body {
   height: 100%;
@@ -6,5 +21,43 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* Status pill used across the page */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 100px;
+  background: var(--badge);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15px;
+  white-space: nowrap;
 }

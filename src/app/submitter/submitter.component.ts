@@ -1,52 +1,45 @@
-import {Component, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, output} from '@angular/core';
+import {IconComponent} from '../icon/icon.component';
 
 @Component({
-    selector: 'app-submitter',
-    template: `
-    <div class="grid-container">
-      <div class="grid-tile" colspan="2"></div>
-      <div class="grid-tile" colspan="5"></div>
-      <div class="grid-tile" colspan="2"></div>
-      <div class="grid-tile" colspan="2"></div>
-      <div class="grid-tile" colspan="5">
-        <button
-          class="bg-rouge-rubia text-bleu-ceruleen-pale"
-          type="submit"
-          (click)="buttonClick()"
-          aria-label="Formular abschicken"
-        >
-          Senden
-        </button>
-      </div>
-      <div class="grid-tile" colspan="2"></div>
-    </div>
+  selector: 'app-submitter',
+  imports: [IconComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <button class="action" type="submit" (click)="buttonClick()" aria-label="Review & get ready">
+      <span>Review &amp; get ready</span>
+      <app-icon name="arrow-right" [size]="18"/>
+    </button>
   `,
-    styles: `
+  styles: [`
     :host {
-      min-height: 20px;
+      display: block;
+    }
+    .action {
       display: flex;
+      align-items: center;
       justify-content: center;
-    }
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(9, 1fr);
-      grid-auto-rows: 50px;
+      gap: 10px;
       width: 100%;
+      height: 48px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      background: var(--brand);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 17px;
     }
-    .grid-tile {
-      grid-column: span 1;
+    .action:hover {
+      filter: brightness(1.15);
     }
-    .grid-tile[colspan="2"] { grid-column: span 2; }
-    .grid-tile[colspan="5"] { grid-column: span 5; }
-    button {
-      width: 100%;
-      max-width: 300px;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+
+    @media (max-width: 760px) {
+      .action {
+        height: 52px;
+      }
     }
-  `
+  `],
 })
 export class SubmitterComponent {
   onSubmit = output();

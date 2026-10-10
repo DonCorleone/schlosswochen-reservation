@@ -1,81 +1,167 @@
-import {Component, forwardRef, signal, computed} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, forwardRef, signal} from '@angular/core';
+import {
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
+import {IconComponent} from '../icon/icon.component';
 import {
   AbstractControl,
   ControlValueAccessor,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
   ValidationErrors,
-  Validator
-} from "@angular/forms";
+  Validator,
+} from '@angular/forms';
 
 @Component({
-    selector: 'app-kids-selector',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            multi: true,
-            useExisting: forwardRef(() => KidsSelectorComponent),
-        },
-        {
-            provide: NG_VALIDATORS,
-            multi: true,
-            useExisting: KidsSelectorComponent
-        }
-    ],
-    template: `
-    <div class="grid-container" role="group" aria-label="Kinder Auswahl">
-      <div class="grid-tile" colspan="4"><b>Weniger Kinder</b></div>
-      <div class="grid-tile" colspan="1"></div>
-      <div class="grid-tile" colspan="4"><b>Mehr Kinder</b></div>
-      <div class="grid-tile tile-button" colspan="4" (click)="onRemove()" [class.active]="canRemove()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+  selector: 'app-kids-selector',
+  imports: [IconComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => KidsSelectorComponent),
+    },
+    {
+      provide: NG_VALIDATORS,
+      multi: true,
+      useExisting: forwardRef(() => KidsSelectorComponent),
+    },
+  ],
+  template: `
+    <div class="participant-setup" role="group" aria-label="Participant selection">
+      <div class="instructions">
+        <h2 class="heading">Who’s coming along?</h2>
+        <p class="rule">
+          <app-icon name="link" [size]="14"/>
+          <span>All {{ amount() }} participants must fit in the same event.</span>
+        </p>
       </div>
-      <div class="grid-tile" aria-live="polite">{{ amount() }}</div>
-      <div class="grid-tile tile-button" colspan="4" (click)="onAdd()" [class.active]="canAdd()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      <div class="selector">
+        <button class="step-button" type="button" (click)="onRemove()" [disabled]="!canRemove()"
+                aria-label="Remove one participant">
+          <app-icon name="minus" [size]="16"/>
+        </button>
+        <div class="count" aria-live="polite">
+          <span class="value">{{ amount() }}</span>
+          <span class="unit">participants</span>
+        </div>
+        <button class="step-button" type="button" (click)="onAdd()" [disabled]="!canAdd()"
+                aria-label="Add one participant">
+          <app-icon name="plus" [size]="16"/>
+        </button>
       </div>
     </div>
   `,
-    styles: `
-    :host {
-      min-height: 20px;
-    }
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(9, 1fr);
-      grid-auto-rows: 50px;
-      width: 100%;
-    }
-    .grid-tile {
+  styles: [`
+    .participant-setup {
       display: flex;
-      justify-content: center;
       align-items: center;
-      border: solid 1px #ccc;
-      border-radius: 4px;
-      grid-column: span 1;
-      svg {
-        width: 24px;
-        height: 24px;
-      }
+      justify-content: space-between;
+      padding: 22px;
+      box-sizing: border-box;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
     }
-    .grid-tile[colspan="4"] { grid-column: span 4; }
-    .grid-tile[colspan="1"] { grid-column: span 1; }
-    .tile-button {
-      color: black;
-      pointer-events: none;
+    .instructions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .heading {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 21px;
+      color: var(--text);
+    }
+    .rule {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0;
+      font-size: 13px;
+      line-height: 16px;
+      color: var(--muted);
+    }
+    .rule app-icon {
+      color: var(--accent);
+    }
+    .selector {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .step-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      box-sizing: border-box;
+      background: var(--surface-sunken);
+      border: 1px solid var(--border);
+      color: var(--accent);
+    }
+    .step-button:disabled {
+      color: var(--border);
       cursor: default;
     }
-    .tile-button.active {
-      background-color: lightcoral;
-      color: white;
-      pointer-events: all;
-      cursor: pointer;
+    .count {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      min-width: 62px;
     }
-    .tile-button.active:hover {
-      background-color: lightblue;
-      color: white;
+    .value {
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 31px;
+      color: var(--text);
     }
-  `
+    .unit {
+      font-size: 11px;
+      line-height: 13px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 760px) {
+      .participant-setup {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 18px;
+        border-radius: 16px;
+      }
+      .instructions {
+        gap: 16px;
+      }
+      .rule app-icon {
+        display: none;
+      }
+      .selector {
+        justify-content: space-between;
+        width: 100%;
+      }
+      .step-button {
+        width: 48px;
+        height: 48px;
+      }
+      .count {
+        gap: 3px;
+        min-width: 68px;
+      }
+      .value {
+        font-size: 28px;
+        line-height: 34px;
+      }
+      .unit {
+        font-size: 12px;
+      }
+    }
+  `],
 })
 export class KidsSelectorComponent implements ControlValueAccessor, Validator {
 
@@ -94,8 +180,8 @@ export class KidsSelectorComponent implements ControlValueAccessor, Validator {
    }
 
   validate(control: AbstractControl<any, any>): ValidationErrors | null {
-     const amountArray = control.value?.split(',');
-     const quantity = amountArray?.length;
+     const amountArray = (control.value as string | undefined)?.split(',');
+     const quantity = amountArray?.length ?? 0;
      if (quantity <= 0) {
        return {
          mustBePositive: {
@@ -128,31 +214,31 @@ export class KidsSelectorComponent implements ControlValueAccessor, Validator {
    }
 
   onAdd() {
-     this.markAsTouched();
-     if (!this.disabled) {
-       const newGuid = KidsSelectorComponent.generateGuid();
-       const current = this.amountString();
-       this.amountString.set(current ? `${current},${newGuid}` : newGuid);
-       this.amount.update(a => a + 1);
-       this.onChange(this.amountString());
-     }
-   }
+    this.markAsTouched();
+    if (!this.disabled && this.canAdd()) {
+      const newGuid = KidsSelectorComponent.generateGuid();
+      const current = this.amountString();
+      this.amountString.set(current ? `${current},${newGuid}` : newGuid);
+      this.amount.update(a => a + 1);
+      this.onChange(this.amountString());
+    }
+  }
 
   onRemove() {
-     this.markAsTouched();
-     if (!this.disabled && this.amount() > 0) {
-       const guids = this.amountString().split(',');
-       guids.pop();
-       this.amount.update(a => a - 1);
-       this.amountString.set(guids.join(','));
-       this.onChange(this.amountString());
-     }
-   }
+    this.markAsTouched();
+    if (!this.disabled && this.canRemove()) {
+      const guids = this.amountString().split(',');
+      guids.pop();
+      this.amount.update(a => a - 1);
+      this.amountString.set(guids.join(','));
+      this.onChange(this.amountString());
+    }
+  }
 
   markAsTouched() {
      if (!this.touched) {
        this.onTouched();
        this.touched = true;
      }
-  }
+   }
 }
