@@ -1,27 +1,69 @@
-# SchlosswochenReservation
+# Schlosswochen Reservation
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.5.
+A simple Angular application for managing reservations for Schlosswochen (castle weeks). Users can select the number of children and choose which weeks they want to reserve, then submit the form.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Kids Selector**: Increment/decrement the number of children (1-3) with visual feedback
+- **Weeks Selector**: Drag-and-drop interface to select available weeks and arrange them in order
+- **Form Submission**: Submits reservation data to Netlify
 
-## Code scaffolding
+## Tech Stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Framework**: Angular 20
+- **UI**: Vanilla CSS (CSS Grid/Flexbox) with inline SVG icons
+- **Drag & Drop**: Angular CDK (`@angular/cdk/drag-drop`)
+- **Forms**: Angular Reactive Forms
+- **Deployment**: Netlify (via Netlify Forms)
 
-## Build
+## Project Structure
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+src/app/
+├── add-week/          # Icon button component (add/remove/arrow icons)
+├── kids-selector/     # Child count selector with +/- buttons
+├── weeks-selector/    # Week selection with drag-and-drop
+├── submitter/         # Submit button component
+└── app.component.ts   # Main app with form handling
+```
 
-## Running unit tests
+## Development
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Prerequisites
+- Node.js 18+
+- npm 9+
 
-## Running end-to-end tests
+### Install
+```bash
+npm install
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Development server
+```bash
+npm start
+```
+Navigates to `http://localhost:4200/`.
 
-## Further help
+### Build
+```bash
+npm run build
+```
+Build artifacts stored in `dist/schlosswochen-reservation/`.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Usage
+
+1. Select number of children using the +/- buttons in the Kids Selector
+2. Drag weeks from the "Auswahl Wochen" (Available Weeks) column to the "Reservation Wochen" (Reserved Weeks) column
+3. Reorder reserved weeks by dragging them up/down
+4. Remove weeks using the remove icon
+5. Click "Senden" (Submit) to send the reservation
+
+## Deployment
+
+Deploy the `dist/schlosswochen-reservation` directory to any static hosting service. The app is configured for Netlify Forms - ensure the form `action` and `netlify` attributes are preserved.
+
+## Notes
+
+- Previously used Angular Material for grid layout and icons, now replaced with vanilla CSS and inline SVG
+- Angular CDK drag-and-drop is retained for the week selection functionality
+- Form uses hidden inputs for Netlify Forms compatibility
